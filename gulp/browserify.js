@@ -19,18 +19,11 @@ var environment = process.env.NODE_ENV || "development";
 var away3d_entry = './app/scripts/away3d/main.ts';
 
 var npm_deps = {
-    "awayjs-full": "./node_modules/awayjs-full/dist/index.js"
+    "awayjs-full": "./node_modules/awayjs-full/dist/index.js",
+    'angular': './node_modules/angular/index.js',
+    'angular-ui-router': './node_modules/angular-ui-router/release/angular-ui-router.js',
+    'oclazyload': './node_modules/oclazyload/dist/ocLazyLoad.js'
 }
-
-var bower_deps = [
-    "angular",
-    "gl-matrix",
-    "angular-ui-router",
-    "ocLazyLoad",
-    "lodash",
-    "webgl-utils",
-    "md5"
-];
 
 var make_bundle = function(opts){
     
@@ -45,11 +38,7 @@ var make_bundle = function(opts){
     if(opts.bsfy_opts === undefined){
         opts.bsfy_opts = {};
     }
-    
-    if(opts.bsfy_bower_opts === undefined){
-        opts.bsfy_bower_opts = {};
-    }
-    
+
     var out_file = opts.out_file || path.basename(opts.bsfy_opts.entries);
         
     var bsfy_opts_common = {
@@ -87,7 +76,6 @@ var make_bundle = function(opts){
         b.on('update', rebundle);
     }
     
-    b.plugin("browserify-bower", opts.bsfy_bower_opts);
     b.plugin(tsify, {
         target: 'es6',
         module: 'commonjs',
@@ -110,8 +98,7 @@ gulp.task("bsfy-bundle-vendor", ['clean'], function(){
     return make_bundle({
         out_file: "vendor.js",
         use_watchify: false,
-        require: npm_deps,
-        bsfy_bower_opts: { require: bower_deps }
+        require: npm_deps
     });
 });
 
@@ -126,8 +113,7 @@ gulp.task("bsfy-bundle-away3d", ["bsfy-bundle-vendor"], function(){
 gulp.task("bsfy-bundle-app", ["bsfy-bundle-away3d"], function(){
     return make_bundle({
         external: extend({'away3d-runtime': away3d_entry}, npm_deps),
-        bsfy_opts: {entries: "app/scripts/index.js"},
-        bsfy_bower_opts: {external: bower_deps}
+        bsfy_opts: {entries: "app/scripts/index.js"}
     })
 
 });
