@@ -2,7 +2,7 @@
   "name": "populis",
   "version": "0.0.1",
   "dependencies": {
-    "awayjs-full": "0.2.15",
+    "three": "0.79.0",
     "angular": "1.5.8",
     "angular-ui-router": "0.3.1",
     "oclazyload": "1.0.9"

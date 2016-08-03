@@ -16,14 +16,28 @@ var resolve = require('resolve-file');
 //Defaults to 'development'.
 var environment = process.env.NODE_ENV || "development"; 
 
-var away3d_entry = './app/scripts/away3d/main.ts';
-
 var npm_deps = {
-    "awayjs-full": "./node_modules/awayjs-full/dist/index.js",
+    'three': "./node_modules/three/build/three.js",
     'angular': './node_modules/angular/index.js',
     'angular-ui-router': './node_modules/angular-ui-router/release/angular-ui-router.js',
     'oclazyload': './node_modules/oclazyload/dist/ocLazyLoad.js'
 }
+
+function string_src(filename, string) {
+    var src = require('stream').Readable({ objectMode: true })
+
+    src._read = function () {
+        this.push(new gutil.File({ cwd: "", base: "", path: filename, contents: new Buffer(string) }));
+        this.push(null);
+    };
+
+    return src;
+};
+
+var store_to_tempfile = function(outfile, obj){
+    return string_src(outfile, JSON.stringify(obj))
+        .pipe(gulp.dest('app/temp'));
+};
 
 var make_bundle = function(opts){
     
@@ -43,7 +57,7 @@ var make_bundle = function(opts){
         
     var bsfy_opts_common = {
         debug: (environment == "development"),
-        paths: ["app/scripts"],
+        paths: ["app"],
         cache: {},
         packageCache: {}
     };
@@ -102,17 +116,20 @@ gulp.task("bsfy-bundle-vendor", ['clean'], function(){
     });
 });
 
-gulp.task("bsfy-bundle-away3d", ["bsfy-bundle-vendor"], function(){
-    return make_bundle({
-        out_file: "away3d.js",
-        external: npm_deps,
-        require: {'away3d-runtime': away3d_entry}
-    })
+gulp.task("jsonize-shaders", function(){
+    var shaders = {};
+    return gulp.src('app/assets/shaders/*.glsl')
+        .pipe(foreach(function(stream, file){
+            shaders[path.basename(file.path)] = file.contents.toString('utf8');
+            return stream;
+        })).on('end', function(){
+            return store_to_tempfile('shaders.json', shaders);
+        });
 });
 
-gulp.task("bsfy-bundle-app", ["bsfy-bundle-away3d"], function(){
+gulp.task("bsfy-bundle-app", ["bsfy-bundle-vendor", "jsonize-shaders"], function(){
     return make_bundle({
-        external: extend({'away3d-runtime': away3d_entry}, npm_deps),
+        external: npm_deps,
         bsfy_opts: {entries: "app/scripts/index.js"}
     })
 

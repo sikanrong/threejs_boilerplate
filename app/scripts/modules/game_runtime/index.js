@@ -1,7 +1,6 @@
 'use strict';
 
 var angular = require('angular');
-
 var mdl = angular.module('populis.runtime', []);
 
 mdl.controller('psRuntimeCtrl', require('./controllers/runtime.js'));

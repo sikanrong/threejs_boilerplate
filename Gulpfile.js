@@ -10,6 +10,7 @@ gulp.task('clean', function(){
 
     del([
         "app/dist/*",
+        "app/temp/*"
     ]);
 });
 

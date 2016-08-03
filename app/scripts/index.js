@@ -15,4 +15,4 @@ var app_module = angular.module('populis', [
     'populis.runtime'
 ]);
 
-app_module.config(require("config/routes.js"));
+app_module.config(require("scripts/config/routes.js"));

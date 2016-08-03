@@ -1,15 +1,14 @@
 'use strict';
 
-var A3DRuntime = require('away3d-runtime').default;
+var threejs_runtime = require('../threejs/main.js');
 
 module.exports = [
     function(){
         return {
             restrict: "E",
-            replace: true,
 
             link: function(scope, element, attrs, ctrl, transclude){
-                new A3DRuntime();
+                threejs_runtime(element[0]);
             }
         }
     }
