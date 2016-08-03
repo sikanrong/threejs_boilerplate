@@ -1,0 +1,36 @@
+{
+  "name": "populis",
+  "version": "0.0.1",
+  "dependencies": {
+    "awayjs-full": "latest"
+  },
+  "devDependencies": {
+    "bower": "latest",
+
+    "browserify": "latest",
+    "browserify-bower": "latest",
+    "watchify": "latest",
+    "sassify": "latest",
+    "tsify": "latest",
+
+    "gulp": "latest",
+    "gulp-foreach": "latest",
+    "gulp-util": "latest",
+    "gulp-livereload": "latest",
+
+    "request": "latest",
+    "connect": "latest",
+    "connect-livereload": "latest",
+    "serve-static": "latest",
+    "tiny-lr": "latest",
+    "vinyl-source-stream": "latest",
+
+    "typescript": "latest",
+
+    "q": "latest",
+    "del": "latest",
+    "path": "latest",
+    "resolve-file": "latest",
+    "node.extend": "latest"
+  }
+}

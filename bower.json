@@ -1,0 +1,20 @@
+{
+  "name": "populis",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "./app/scripts/vendor/angular",
+    "gl-matrix": "2.3.2",
+    "angular-ui-router": "0.2.15",
+    "ocLazyLoad": "1.0.6",
+    "lodash": "3.10.1",
+    "webgl-utils": "./app/scripts/vendor/webgl-utils",
+    "md5": "0.3.0"
+  },
+
+  "resolutions": {
+    "angular": "1.5.6"
+  },
+
+  "appPath": "app",
+  "moduleName": "Populis"
+}
