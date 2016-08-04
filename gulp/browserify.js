@@ -14,14 +14,9 @@ var resolve = require('resolve-file');
 
 //Detect production/development environment from system environment vars.
 //Defaults to 'development'.
-var environment = process.env.NODE_ENV || "development"; 
+var environment = process.env.NODE_ENV || "development";
 
-var npm_deps = {
-    'three': "./node_modules/three/build/three.js",
-    'angular': './node_modules/angular/index.js',
-    'angular-ui-router': './node_modules/angular-ui-router/release/angular-ui-router.js',
-    'oclazyload': './node_modules/oclazyload/dist/ocLazyLoad.js'
-}
+var npm_deps = Object.keys(require('../package.json').dependencies);
 
 function string_src(filename, string) {
     var src = require('stream').Readable({ objectMode: true })
@@ -68,14 +63,16 @@ var make_bundle = function(opts){
 
     if(opts.require){
         for(key in opts.require){
-            var npm_path = opts.require[key];
-            b.require(resolve(npm_path), {expose: key});
+            var npm_name = opts.require[key];
+            var npm_path = resolve(npm_name);
+            b.require(npm_path, {expose: npm_name});
         }
     }
 
     if(opts.external){
         for(key in opts.external){
-            b.external(key);
+            var npm_name = opts.external[key];
+            b.external(npm_name);
         }
     }
 
