@@ -1,14 +1,13 @@
 'use strict';
 
-var threejs_runtime = require('../threejs/main.js');
-
 module.exports = [
-    function(){
+    '3JSMain',
+    function(ThreejsRuntime){
         return {
             restrict: "E",
 
             link: function(scope, element, attrs, ctrl, transclude){
-                threejs_runtime(element[0]);
+                var runtime = new ThreejsRuntime(element[0]);
             }
         }
     }

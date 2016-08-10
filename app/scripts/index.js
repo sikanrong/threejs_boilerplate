@@ -6,13 +6,13 @@ require('angular-ui-router');
 require('ocLazyLoad');
 require('./modules/game_runtime/index.js');
 
-var app_module = angular.module('populis', [
+var app_module = angular.module('boilerplate', [
     //routing
     'ui.router',
     'oc.lazyLoad',
 
     //game modules
-    'populis.runtime'
+    'boilerplate.runtime'
 ]);
 
 app_module.config(require("scripts/config/routes.js"));

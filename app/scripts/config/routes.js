@@ -13,7 +13,7 @@ module.exports = ["$stateProvider", "$urlRouterProvider",
 
             views: {
                 mainContent: {
-                    controller: 'psRuntimeCtrl',
+                    controller: 'runtimeCtrl',
                     templateUrl: '/scripts/modules/game_runtime/views/runtime.html'
                 }
             }
