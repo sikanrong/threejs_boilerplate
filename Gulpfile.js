@@ -1,7 +1,8 @@
-var gulp = require('gulp');
+var gulp = GLOBAL.gulp = require('gulp');
 var del = require('del');
 
 //require browserify tasks.
+require("./gulp/shaders");
 require("./gulp/browserify");
 require("./gulp/server");
 
