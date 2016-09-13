@@ -9,7 +9,7 @@ require("./gulp/server");
 gulp.task('clean', function(){
     console.log("Cleaning temp and dist directories...");
 
-    del([
+    return del([
         "app/dist/*",
         "app/temp/*"
     ]);

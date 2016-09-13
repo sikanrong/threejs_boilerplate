@@ -1,14 +1,17 @@
 'use strict';
 
-module.exports = [
-    '3JSMain',
-    function(ThreejsRuntime){
-        return {
-            restrict: "E",
+var ThreejsMain = require('../services/threejs/main.js');
 
-            link: function(scope, element, attrs, ctrl, transclude){
-                var runtime = new ThreejsRuntime(element[0]);
-            }
-        }
+module.exports = ng.core.Directive({
+    selector: 'runtime-canvas',
+    providers: [ ThreejsMain ]
+}).Class({
+    constructor: [ng.core.ElementRef, ThreejsMain, function(el, runtime){
+        this.el = el.nativeElement;
+        this.runtime = runtime;
+    }],
+
+    ngOnInit: function(){
+        this.runtime.main(this.el);
     }
-];
+});

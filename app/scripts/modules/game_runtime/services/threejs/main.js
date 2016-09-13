@@ -1,72 +1,74 @@
 'use strict';
 
-module.exports = function(){
-    return function(container){
+module.exports = ng.core.Injectable().Class({
+   constructor: [function(){}],
 
-        var camera, scene, renderer;
+   main: function(container){
 
-        var uniforms;
+       var camera, scene, renderer;
 
-        init();
-        animate();
+       var uniforms;
 
-        function init() {
+       init();
+       animate();
 
-            camera = new THREE.Camera();
-            camera.position.z = 1;
+       function init() {
 
-            scene = new THREE.Scene();
+           camera = new THREE.Camera();
+           camera.position.z = 1;
 
-            var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+           scene = new THREE.Scene();
 
-            uniforms = {
-                time:       { value: 1.0 },
-                resolution: { value: new THREE.Vector2() }
-            };
+           var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
-            var material = new THREE.ShaderMaterial( {
-                uniforms: uniforms,
-                vertexShader: $shaders['vertex_basic.glsl'],
-                fragmentShader: $shaders['fragment_monjori.glsl']
+           uniforms = {
+               time:       { value: 1.0 },
+               resolution: { value: new THREE.Vector2() }
+           };
 
-            } );
+           var material = new THREE.ShaderMaterial( {
+               uniforms: uniforms,
+               vertexShader: $shaders['vertex_basic.glsl'],
+               fragmentShader: $shaders['fragment_monjori.glsl']
 
-            var mesh = new THREE.Mesh( geometry, material );
-            scene.add( mesh );
+           } );
 
-            renderer = new THREE.WebGLRenderer();
-            renderer.setPixelRatio( window.devicePixelRatio );
-            container.appendChild( renderer.domElement );
+           var mesh = new THREE.Mesh( geometry, material );
+           scene.add( mesh );
 
-            onWindowResize();
+           renderer = new THREE.WebGLRenderer();
+           renderer.setPixelRatio( window.devicePixelRatio );
+           container.appendChild( renderer.domElement );
 
-            window.addEventListener( 'resize', onWindowResize, false );
+           onWindowResize();
 
-        }
+           window.addEventListener( 'resize', onWindowResize, false );
 
-        function onWindowResize( event ) {
+       }
 
-            renderer.setSize( window.innerWidth, window.innerHeight );
+       function onWindowResize( event ) {
 
-            uniforms.resolution.value.x = renderer.domElement.width;
-            uniforms.resolution.value.y = renderer.domElement.height;
+           renderer.setSize( window.innerWidth, window.innerHeight );
 
-        }
+           uniforms.resolution.value.x = renderer.domElement.width;
+           uniforms.resolution.value.y = renderer.domElement.height;
 
-        function animate() {
+       }
 
-            requestAnimationFrame( animate );
+       function animate() {
 
-            render();
+           requestAnimationFrame( animate );
 
-        }
+           render();
 
-        function render() {
+       }
 
-            uniforms.time.value += 0.05;
+       function render() {
 
-            renderer.render( scene, camera );
+           uniforms.time.value += 0.05;
 
-        }
-    }
-};
+           renderer.render( scene, camera );
+
+       }
+   }
+});

@@ -4,7 +4,7 @@ var tap = require("gulp-tap");
 var obj2file = require('./utils/obj2file.js');
 var path = require('path');
 
-gulp.task("jsonize-shaders", function(){
+gulp.task("jsonize-shaders", ['clean'], function(){
     var shaders = {};
     return gulp.src('app/assets/shaders/*.glsl')
         .pipe(tap(function(file){
